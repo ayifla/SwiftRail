@@ -1,9 +1,9 @@
-"use client";
+\"use client\";
 
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import BookingStepper from "../../components/BookingStepper";
-import TrainCard from "../../components/TrainCard";
+import { useRouter, useSearchParams } from \"next/navigation\";
+import { Suspense, useEffect, useState } from \"react\";
+import BookingStepper from \"../../components/BookingStepper\";
+import TrainCard from \"../../components/TrainCard\";
 
 const stations = ["Mumbai", "Delhi", "Pune", "Bangalore"];
 
@@ -22,7 +22,7 @@ type Train = {
   price: number;
 };
 
-export default function SearchResultsPage() {
+function SearchContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [origin, setOrigin] = useState("");
@@ -154,14 +154,19 @@ export default function SearchResultsPage() {
 
         {!loading &&
           trains.map((train) => (
-            <TrainCard
-              key={train.id}
-              {...train}
-              onBook={() => handleBook(train.id)}
-            />
+            <TrainCard key={train.id} {...train} onBook={() => handleBook(train.id)} />
           ))}
       </div>
     </div>
   );
 }
+
+export default function SearchResultsPage() {
+  return (
+    <Suspense fallback={<div className="p-4 text-sm text-slate-500">Loading search...</div>}>
+      <SearchContent />
+    </Suspense>
+  );
+}
+
 
