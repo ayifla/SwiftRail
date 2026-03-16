@@ -1,9 +1,9 @@
-\"use client\";
+ 'use client'
 
-import { useRouter, useSearchParams } from \"next/navigation\";
-import { Suspense, useEffect, useState } from \"react\";
-import BookingStepper from \"../../components/BookingStepper\";
-import TrainCard from \"../../components/TrainCard\";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
+import BookingStepper from "../../components/BookingStepper";
+import TrainCard from "../../components/TrainCard";
 
 const stations = ["Mumbai", "Delhi", "Pune", "Bangalore"];
 
@@ -41,8 +41,28 @@ function SearchContent() {
   }, [from, to]);
 
   const getDemoTrains = (): Train[] => [
-    { id: "101", name: "Swift Express 101", from, to, departure: "06:30", arrival: "11:45", duration: "5h 15m", seatsAvailable: 32, price: 850 },
-    { id: "202", name: "Night Rider 202", from, to, departure: "22:15", arrival: "06:05", duration: "7h 50m", seatsAvailable: 12, price: 1200 },
+    {
+      id: "101",
+      name: "Swift Express 101",
+      from,
+      to,
+      departure: "06:30",
+      arrival: "11:45",
+      duration: "5h 15m",
+      seatsAvailable: 32,
+      price: 850,
+    },
+    {
+      id: "202",
+      name: "Night Rider 202",
+      from,
+      to,
+      departure: "22:15",
+      arrival: "06:05",
+      duration: "7h 50m",
+      seatsAvailable: 12,
+      price: 1200,
+    },
   ];
 
   useEffect(() => {
@@ -80,7 +100,11 @@ function SearchContent() {
   };
 
   const handleBook = (trainId: string) => {
-    router.push(`/booking?trainId=${encodeURIComponent(trainId)}&from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&date=${encodeURIComponent(date)}&class=${encodeURIComponent(travelClass)}`);
+    router.push(
+      `/booking?trainId=${encodeURIComponent(trainId)}&from=${encodeURIComponent(from)}&to=${encodeURIComponent(
+        to,
+      )}&date=${encodeURIComponent(date)}&class=${encodeURIComponent(travelClass)}`,
+    );
   };
 
   return (
@@ -161,9 +185,9 @@ function SearchContent() {
   );
 }
 
-export default function SearchResultsPage() {
+export default function SearchPage() {
   return (
-    <Suspense fallback={<div className="p-4 text-sm text-slate-500">Loading search...</div>}>
+    <Suspense fallback={<div className="p-4 text-sm text-slate-500">Loading...</div>}>
       <SearchContent />
     </Suspense>
   );
