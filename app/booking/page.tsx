@@ -1,11 +1,11 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import BookingStepper from "../../components/BookingStepper";
 import PassengerForm from "../../components/PassengerForm";
 
-export default function BookingPage() {
+function BookingContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [step, setStep] = useState<1 | 2 | 3>(2);
@@ -79,6 +79,14 @@ export default function BookingPage() {
         </aside>
       </div>
     </div>
+  );
+}
+
+export default function BookingPage() {
+  return (
+    <Suspense fallback={<div className="p-4 text-sm text-slate-500">Loading booking...</div>}>
+      <BookingContent />
+    </Suspense>
   );
 }
 
